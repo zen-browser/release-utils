@@ -1,4 +1,7 @@
 import { create } from 'xmlbuilder2';
+import releases from './releases.json';
+import fs from 'fs';
+import commandLineArgs from 'command-line-args';
 
 const templateMetadata = `
 <?xml version="1.0" encoding="UTF-8"?>
@@ -29,9 +32,6 @@ const templateMetadata = `
         </ul>
     </description>
 
-    <releases>
-    </releases>
-
     <launchable type="desktop-id">io.github.zen_browser.zen.desktop</launchable>
     <screenshots>
         <screenshot type="default">
@@ -57,4 +57,51 @@ const templateMetadata = `
 
 
 const metadata = create(templateMetadata);
+
+interface Releases {
+    [version: string]: {
+        date: string;
+    }
+}
+
+function createReleasesTag(releases: Releases) {
+    const releasesTag = metadata.root().ele('releases');
+    for (const [version, release] of Object.entries(releases)) {
+        releasesTag.ele('release', { version , date: release.date })
+            .ele('url', { type: 'details' })
+                .txt(`https://zen-browser.app/release-notes/${version}`);
+    }
+}
+
+function createAndPushNewRelease(version: string) {
+    const date = new Date();
+    const dateStr = date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    const releasesCopy: Releases = { ...releases };
+    releasesCopy[version] = { date: dateStr };
+    createReleasesTag(releases);
+    fs.writeFileSync(__dirname + '/releases.json', JSON.stringify(releasesCopy, null, 4));
+    console.log(`New release ${version} added! (${__dirname}/releases.json)`);
+    return date;
+}
+
+const optionDefinitions = [
+    { name: 'version', alias: 'v', type: String },
+]
+
+function main() {
+    const options = commandLineArgs(optionDefinitions);
+    if (!options.version) {
+        console.error('version is required!');
+        return;
+    }
+    createAndPushNewRelease(options.version);
+    createReleasesTag(releases);
+
+    const xml = metadata.end({ prettyPrint: true });
+    
+    // write to releases.xml
+    fs.writeFileSync('releases.xml', xml);
+}
+
+main();
 

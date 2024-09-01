@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "command-line-args": "^6.0.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
     "xmlbuilder2": "^3.1.1"
   },
@@ -8,9 +10,12 @@
   "description": "Scripts used by @zen-browser to make release workflow a less painful process",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build-flatpak": "ts-node flatpak-updates/index.ts"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/command-line-args": "^5.2.3"
+  }
 }
