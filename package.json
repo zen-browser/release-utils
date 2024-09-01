@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "typescript": "^5.5.4",
+    "xmlbuilder2": "^3.1.1"
+  },
+  "name": "release-utils",
+  "version": "1.0.0",
+  "description": "Scripts used by @zen-browser to make release workflow a less painful process",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
