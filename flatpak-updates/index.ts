@@ -65,20 +65,21 @@ interface Releases {
 }
 
 function createReleasesTag(releases: Releases) {
-    const releasesTag = metadata.root().ele('releases');
+    let releasesTag = metadata.root().ele('releases');
     for (const [version, release] of Object.entries(releases)) {
-        releasesTag.ele('release', { version , date: release.date })
+        releasesTag = releasesTag.ele('release', { version , date: release.date })
             .ele('url', { type: 'details' })
-                .txt(`https://zen-browser.app/release-notes/${version}`);
+                .txt(`https://zen-browser.app/release-notes/${version}`)
+                .up()
+            .up();
     }
 }
 
 function createAndPushNewRelease(version: string) {
     const date = new Date();
-    const dateStr = date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    const dateStr = date.toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
     const releasesCopy: Releases = { ...releases };
     releasesCopy[version] = { date: dateStr };
-    createReleasesTag(releases);
     fs.writeFileSync(__dirname + '/releases.json', JSON.stringify(releasesCopy, null, 4));
     console.log(`New release ${version} added! (${__dirname}/releases.json)`);
     return date;
