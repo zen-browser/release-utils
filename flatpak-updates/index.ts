@@ -55,7 +55,7 @@ const templateMetadata = `
             <image>https://raw.githubusercontent.com/zen-browser/www/main/public/browser-3.png</image>
         </screenshot>
         <screenshot>
-            <image>https://raw.githubusercontent.com/zen-browser/www/main/public/browser-4.png</image>
+            <image>https://raw.githubusercontent.com/zen-browser/www/main/public/browser-4.jpg</image>
         </screenshot>
     </screenshots>
 
@@ -89,7 +89,8 @@ interface Releases {
 
 function createReleasesTag(releases: Releases) {
     let releasesTag = metadata.root().ele('releases');
-    for (const [version, release] of Object.entries(releases)) {
+
+    for (const [version, release] of Object.entries(releases).toReversed()) {
         releasesTag = releasesTag.ele('release', { version , date: release.date })
             .ele('url', { type: 'details' })
                 .txt(`https://zen-browser.app/release-notes/${version}`)
@@ -98,14 +99,17 @@ function createReleasesTag(releases: Releases) {
     }
 }
 
-function createAndPushNewRelease(version: string) {
+function createAndPushNewRelease(version: string): Releases {
     const date = new Date();
-    const dateStr = date.toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    const dateStr = date.toISOString();
+
     const releasesCopy: Releases = { ...releases };
     releasesCopy[version] = { date: dateStr };
+
     fs.writeFileSync(__dirname + '/releases.json', JSON.stringify(releasesCopy, null, 4));
     console.log(`New release ${version} added! (${__dirname}/releases.json)`);
-    return date;
+
+    return releasesCopy;
 }
 
 const optionDefinitions = [
@@ -118,7 +122,8 @@ function main() {
         console.error('version is required!');
         return;
     }
-    createAndPushNewRelease(options.version);
+
+    const releases = createAndPushNewRelease(options.version);
     createReleasesTag(releases);
 
     const xml = metadata.end({ prettyPrint: true });
@@ -128,4 +133,3 @@ function main() {
 }
 
 main();
-
