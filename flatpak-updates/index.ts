@@ -90,7 +90,7 @@ interface Releases {
 function createReleasesTag(releases: Releases) {
     let releasesTag = metadata.root().ele('releases');
 
-    for (const [version, release] of Object.entries(releases).toReversed()) {
+    for (const [version, release] of Object.entries(releases).map((val) => val).reverse()) {
         releasesTag = releasesTag.ele('release', { version , date: release.date })
             .ele('url', { type: 'details' })
                 .txt(`https://zen-browser.app/release-notes/${version}`)
