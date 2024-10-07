@@ -11,7 +11,7 @@ const templateMetadata = `
     <id>io.github.zen_browser.zen</id>
 
     <name>Zen</name>
-    <summary>Your browser, your way</summary>
+    <summary>Stay focused, browse faster</summary>
 
     <developer id="io.github.zen_browser.zen">
         <name>Zen Team</name>
