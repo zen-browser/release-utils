@@ -46,16 +46,13 @@ const templateMetadata = `
 
     <screenshots>
         <screenshot type="default">
-            <image>https://raw.githubusercontent.com/zen-browser/www/main/public/browser-1.png</image>
+            <image>https://raw.githubusercontent.com/zen-browser/www/refs/heads/main/src/assets/browser.png</image>
         </screenshot>
         <screenshot>
-            <image>https://raw.githubusercontent.com/zen-browser/www/main/public/browser-2.png</image>
+            <image>https://raw.githubusercontent.com/zen-browser/www/refs/heads/main/src/assets/browser-splitview.png</image>
         </screenshot>
         <screenshot>
-            <image>https://raw.githubusercontent.com/zen-browser/www/main/public/browser-3.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://raw.githubusercontent.com/zen-browser/www/main/public/browser-4.jpg</image>
+            <image>https://raw.githubusercontent.com/zen-browser/www/refs/heads/main/src/assets/browser-compactmode.png</image>
         </screenshot>
     </screenshots>
 
