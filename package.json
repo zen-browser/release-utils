@@ -3,7 +3,7 @@
     "command-line-args": "^6.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
-    "xmlbuilder2": "^3.1.1"
+    "xmlbuilder2": "^4.0.3"
   },
   "name": "release-utils",
   "version": "1.0.0",
